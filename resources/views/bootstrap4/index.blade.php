@@ -8,21 +8,27 @@
 @include('translation-manager::bootstrap4._notifications')
 @section('content')
 
-        @include('translation-manager::bootstrap4.blocks._mainBlock')
-        @include('translation-manager::bootstrap4.blocks._addEditGroupKeys')
-        @if($group)
-            @include('translation-manager::bootstrap4.blocks._edit')
-        @else
-            @include('translation-manager::bootstrap4.blocks._supportedLocales')
-            @include('translation-manager::bootstrap4.blocks._publishAll')
-        @endif
+    @include('translation-manager::bootstrap4.blocks._mainBlock')
+    @include('translation-manager::bootstrap4.blocks._addEditGroupKeys')
+    @if($group)
+        @include('translation-manager::bootstrap4.blocks._edit')
+    @else
+        @include('translation-manager::bootstrap4.blocks._supportedLocales')
+        @include('translation-manager::bootstrap4.blocks._publishAll')
+    @endif
 @stop
 
-@section('styles')
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" />
-@endsection
+@push('styles')
+    {{--<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>--}}
+    <link href="https://cdn.jsdelivr.net/gh/Talv/x-editable@develop/dist/bootstrap4-editable/css/bootstrap-editable.css"
+          rel="stylesheet">
 
-@section('scripts')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+@endpush
+
+@push('scripts')
+    {{--<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>--}}
+    <script
+        src="https://cdn.jsdelivr.net/gh/Talv/x-editable@develop/dist/bootstrap4-editable/js/bootstrap-editable.min.js"></script>
+
     @include('translation-manager::jsScript')
-@endsection
+@endpush

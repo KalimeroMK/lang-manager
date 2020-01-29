@@ -20,11 +20,7 @@ This way, translations can be saved in git history and no overhead is introduced
 
 Require this package in your composer.json and run composer update (or run `composer require barryvdh/laravel-translation-manager` directly):
 
-    composer require barryvdh/laravel-translation-manager
-
-After updating composer, add the ServiceProvider to the providers array in `config/app.php`
-
-    'Barryvdh\TranslationManager\ManagerServiceProvider',
+    composer require kalimeromk/laravel-translation-manager
 
 You need to run the migrations for this package.
 
@@ -43,29 +39,6 @@ Routes are added in the ServiceProvider. You can set the group parameters for th
 You can change the prefix or filter/middleware for the routes. If you want full customisation, you can extend the ServiceProvider and override the `map()` function.
 
 This example will make the translation manager available at `http://yourdomain.com/translations`
-
-### Laravel >= 5.2
-
-The configuration file by default only includes the `auth` middleware, but the latests changes in Laravel 5.2 makes it that session variables are only accessible when your route includes the `web` middleware. In order to make this package work on Laravel 5.2, you will have to change the route/middleware setting from the default 
-
-```
-    'route' => [
-        'prefix' => 'translations',
-        'middleware' => 'auth',
-    ],
-```
-
-to
-
-```
-    'route' => [
-        'prefix' => 'translations',
-        'middleware' => [
-	        'web',
-	        'auth',
-		],
-    ],
-```
 
 **NOTE:** *This is only needed in Laravel 5.2 (and up!)*
 

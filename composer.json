@@ -1,42 +1,44 @@
 {
-  "name": "kalimeromk/laravel-translation-manager",
-  "description": "Manage Laravel Translations",
-  "keywords": [
-    "laravel",
-    "translations",
-    "translator"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Barry vd. Heuvel",
-      "email": "barryvdh@gmail.com"
+    "name": "novatio/laravel-translation-manager",
+    "description": "Manage Laravel Translations",
+    "keywords": ["laravel", "translations", "translator"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
+        },
+        {
+            "name": "Gabrijel Gavranović",
+            "email": "gabrijel@novat.io"
+        },
+        {
+            "name": "Martijn v. Nieuwenhoven",
+            "email": "martijn@novat.io"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.x|5.6.x",
+        "illuminate/translation": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x|5.5.x|5.6.x",
+        "symfony/finder": "~2.3|~3.0|~4.0",
+        "novatio/laravel-admin": "dev-master",
+        "novatio/laravel-translatable": "dev-master"
     },
-    {
-      "name": "Zoran Bogoevski",
-      "email": "zbogoevski@gmail.com"
-    }
-  ],
-  "require": {
-    "php": ">=7",
-    "illuminate/support": "5.5.x|5.6.x|5.7.x|6.x",
-    "illuminate/translation": "5.5.x|5.6.x|5.7.x|6.x",
-    "symfony/finder": "~3.0|~4.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Barryvdh\\TranslationManager\\": "src/"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.5-dev"
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Novatio\\TranslationManager\\ManagerServiceProvider"
+            ]
+        }
     },
-    "laravel": {
-      "providers": [
-        "Barryvdh\\TranslationManager\\ManagerServiceProvider"
-      ]
-    }
-  },
-  "minimum-stability": "stable"
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Novatio\\TranslationManager\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
 }

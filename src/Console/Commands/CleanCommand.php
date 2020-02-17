@@ -1,27 +1,29 @@
 <?php
 
-namespace Barryvdh\TranslationManager\Console;
+namespace Novatio\TranslationManager\Console\Commands;
 
-use Barryvdh\TranslationManager\Manager;
+use Novatio\TranslationManager\Manager;
 use Illuminate\Console\Command;
 
-class FindCommand extends Command
+class CleanCommand extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'translations:find';
+    protected $name = 'translations:clean';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Find translations in php/twig files';
+    protected $description = 'Clean empty translations';
 
-    /** @var \Barryvdh\TranslationManager\Manager */
+    /**
+     * @var Manager
+     */
     protected $manager;
 
     public function __construct(Manager $manager)
@@ -32,10 +34,12 @@ class FindCommand extends Command
 
     /**
      * Execute the console command.
+     *
+     * @return void
      */
     public function handle()
     {
-        $counter = $this->manager->findTranslations(null);
-        $this->info('Done importing, processed '.$counter.' items!');
+        $this->manager->cleanTranslations();
+        $this->info("Done cleaning translations");
     }
 }

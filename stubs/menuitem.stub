@@ -1,8 +1,0 @@
-
-@can('index', new \Novatio\TranslationManager\Models\Translation)
-    <li>
-        <a href="{{ route('admin.translations.index') }}">
-            <i class="fa fa-language"></i> <span class="nav-label">{{ trans('translation-manager::models.translations') }}</span>
-        </a>
-    </li>
-@endcan

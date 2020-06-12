@@ -1,58 +1,73 @@
 ## Laravel 5 Translation Manager
 
+### For Laravel 4, please use the [0.1 branch](https://github.com/barryvdh/laravel-translation-manager/tree/0.1)!
+
 This is a package to manage Laravel translation files.
 It does not replace the Translation system, only import/export the php files to a database and make them editable through a webinterface.
 The workflow would be:
 
-    - Import translations: Read all translation files and save them in the database.
-    - Find all translations in php/twig sources.
-    - Optionally: Listen to missing translation with the custom Translator.
-    - Translate all keys through the webinterface.
+    - Import translations: Read all translation files and save them in the database
+    - Find all translations in php/twig sources
+    - Optionally: Listen to missing translation with the custom Translator
+    - Translate all keys through the webinterface
     - Export: Write all translations back to the translation files.
 
 This way, translations can be saved in git history and no overhead is introduced in production.
 
-![Screenshot](http://i.imgur.com/FT3RAMr.jpg)
+![Screenshot](http://i.imgur.com/4th2krf.png)
 
 ## Installation
 
-Require this package in your composer.json and run composer update (or run `composer require novatio/laravel-translation-manager` directly):
+Require this package in your composer.json and run composer update (or run `composer require barryvdh/laravel-translation-manager` directly):
 
-    "novatio/laravel-translation-manager": "dev-master"
+    composer require barryvdh/laravel-translation-manager
 
-After updating composer, add the ServiceProvider to the providers array in config/app.php
+After updating composer, add the ServiceProvider to the providers array in `config/app.php`
 
-    Novatio\TranslationManager\ManagerServiceProvider::class,
+    'Barryvdh\TranslationManager\ManagerServiceProvider',
 
 You need to run the migrations for this package.
 
+    $ php artisan vendor:publish --provider="Barryvdh\TranslationManager\ManagerServiceProvider" --tag=migrations
     $ php artisan migrate
 
 You need to publish the config file for this package. This will add the file `config/translation-manager.php`, where you can configure this package.
 
-    $ php artisan vendor:publish --provider="Novatio\TranslationManager\ManagerServiceProvider" --tag=config
+    $ php artisan vendor:publish --provider="Barryvdh\TranslationManager\ManagerServiceProvider" --tag=config
+
+In order to edit the default template, the views must be published as well. The views will then be placed in `resources/views/vendor/translation-manager`.
+
+    $ php artisan vendor:publish --provider="Barryvdh\TranslationManager\ManagerServiceProvider" --tag=views
 
 Routes are added in the ServiceProvider. You can set the group parameters for the routes in the configuration.
 You can change the prefix or filter/middleware for the routes. If you want full customisation, you can extend the ServiceProvider and override the `map()` function.
 
-This example will make the translation manager available at `http://yourdomain.com/admin/translations`
+This example will make the translation manager available at `http://yourdomain.com/translations`
 
-To add a menu item and route, run these commands:
+### Laravel >= 5.2
 
-    $ php artisan adminmenu:translations
-    $ php artisan adminroute:translations
+The configuration file by default only includes the `auth` middleware, but the latests changes in Laravel 5.2 makes it that session variables are only accessible when your route includes the `web` middleware. In order to make this package work on Laravel 5.2, you will have to change the route/middleware setting from the default 
 
-### laravel-translatable ###
+```
+    'route' => [
+        'prefix' => 'translations',
+        'middleware' => 'auth',
+    ],
+```
 
-This package requires ```novatio/laravel-translatable``` and it will automatically be installed. If you haven't installed this module previously, you'll have to follow the next steps to complete the installation of this module.
+to
 
-Add the ServiceProvider to the providers array in config/app.php
+```
+    'route' => [
+        'prefix' => 'translations',
+        'middleware' => [
+	        'web',
+	        'auth',
+		],
+    ],
+```
 
-    Novatio\Translatable\TranslatableServiceProvider::class,
-
-publish the package files:
-
-    $ php artisan vendor:publish --provider="Novatio\Translatable\TranslatableServiceProvider"
+**NOTE:** *This is only needed in Laravel 5.2 (and up!)*
 
 ## Usage
 
@@ -72,7 +87,9 @@ The import command will search through app/lang and load all strings in the data
 
     $ php artisan translations:import
 
-Note: By default, only new strings are added. Translations already in the DB are kept the same. If you want to replace all values with the ones from the files,
+Translation strings from app/lang/locale.json files will be imported to the __json_ group.
+    
+Note: By default, only new strings are added. Translations already in the DB are kept the same. If you want to replace all values with the ones from the files, 
 add the `--replace` (or `-R`) option: `php artisan translations:import --replace`
 
 ### Find translations in source
@@ -82,6 +99,8 @@ The found keys will be added to the database, so they can be easily translated.
 This can be done through the webinterface, or via an Artisan command.
 
     $ php artisan translations:find
+    
+If your project uses translation strings as keys, these will be stored into then __json_ group. 
 
 ### Export command
 
@@ -92,6 +111,8 @@ Supply the group name to define which groups you want to publish.
     $ php artisan translations:export <group>
 
 For example, `php artisan translations:export reminders` when you have 2 locales (en/nl), will write to `app/lang/en/reminders.php` and `app/lang/nl/reminders.php`
+
+To export translation strings as keys to JSON files , use the `--json` (or `-J`) option: `php artisan translations:import --json`. This will import every entries from the __json_ group.
 
 ### Clean command
 
@@ -105,14 +126,26 @@ The reset command simply clears all translation in the database, so you can star
 
     $ php artisan translations:reset
 
+
+
 ### Detect missing translations
 
 Most translations can be found by using the Find command (see above), but in case you have dynamic keys (variables/automatic forms etc), it can be helpful to 'listen' to the missing translations.
-To detect missing translations, we can swap the Laravel TranslationServicepProvider with a custom provider.
-In your config/app.php, comment out the original TranslationServiceProvider and add the one from this package:
+To detect missing translations, we can swap the Laravel TranslationServiceProvider with a custom provider.
+In your `config/app.php`, comment out the original TranslationServiceProvider and add the one from this package:
 
-    //Illuminate\Translation\TranslationServiceProvider::class,
-    Novatio\TranslationManager\TranslationServiceProvider::class,
+    //'Illuminate\Translation\TranslationServiceProvider',
+    'Barryvdh\TranslationManager\TranslationServiceProvider',
 
 This will extend the Translator and will create a new database entry, whenever a key is not found, so you have to visit the pages that use them.
 This way it shows up in the webinterface and can be edited and later exported.
+You shouldn't use this in production, just in development to translate your views, then just switch back.
+
+## TODO
+
+This package is still very alpha. Few thinks that are on the todo-list:
+
+    - Add locales/groups via webinterface
+    - Improve webinterface (more selection/filtering, behavior of popup after save etc)
+    - Seed existing languages (https://github.com/caouecs/Laravel-lang)
+    - Suggestions are welcome :)

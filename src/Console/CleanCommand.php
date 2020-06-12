@@ -1,30 +1,27 @@
 <?php
 
-namespace Novatio\TranslationManager\Console\Commands;
+namespace Barryvdh\TranslationManager\Console;
 
+use Barryvdh\TranslationManager\Manager;
 use Illuminate\Console\Command;
-use Novatio\TranslationManager\Manager;
 
-class FillFromKeyCommand extends Command
+class CleanCommand extends Command
 {
-
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'translations:fillfromkey';
+    protected $name = 'translations:clean';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Populate empty values from keys';
+    protected $description = 'Clean empty translations';
 
-    /**
-     * @var Manager
-     */
+    /** @var \Barryvdh\TranslationManager\Manager */
     protected $manager;
 
     public function __construct(Manager $manager)
@@ -35,12 +32,10 @@ class FillFromKeyCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
-        $this->manager->fillFromKey();
-        $this->info("All Empty translations are set from last key part");
+        $this->manager->cleanTranslations();
+        $this->info('Done cleaning translations');
     }
 }

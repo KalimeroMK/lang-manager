@@ -1,11 +1,10 @@
-<?php
-
-namespace Novatio\TranslationManager;
+<?php namespace Barryvdh\TranslationManager;
 
 use Illuminate\Translation\TranslationServiceProvider as BaseTranslationServiceProvider;
 
-class TranslationServiceProvider extends BaseTranslationServiceProvider
-{
+class TranslationServiceProvider extends BaseTranslationServiceProvider {
+
+
     /**
      * Register the service provider.
      *
@@ -16,7 +15,8 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
 
         $this->registerLoader();
 
-        $this->app->singleton('translator', function ($app) {
+        $this->app->singleton('translator', function($app)
+        {
             $loader = $app['translation.loader'];
 
             // When registering the translator component, we'll need to set the default
@@ -28,11 +28,14 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
 
             $trans->setFallback($app['config']['app.fallback_locale']);
 
-            if ($app->bound('translation-manager')) {
+            if($app->bound('translation-manager')){
                 $trans->setTranslationManager($app['translation-manager']);
             }
 
             return $trans;
         });
+
     }
+
+
 }

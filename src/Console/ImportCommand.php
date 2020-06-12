@@ -1,14 +1,13 @@
 <?php
 
-namespace Novatio\TranslationManager\Console\Commands;
+namespace Barryvdh\TranslationManager\Console;
 
-use Novatio\TranslationManager\Manager;
+use Barryvdh\TranslationManager\Manager;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
 class ImportCommand extends Command
 {
-
     /**
      * The console command name.
      *
@@ -23,9 +22,7 @@ class ImportCommand extends Command
      */
     protected $description = 'Import translations from the PHP sources';
 
-    /**
-     * @var Manager
-     */
+    /** @var \Barryvdh\TranslationManager\Manager */
     protected $manager;
 
     public function __construct(Manager $manager)
@@ -34,18 +31,14 @@ class ImportCommand extends Command
         parent::__construct();
     }
 
-
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
         $replace = $this->option('replace');
         $counter = $this->manager->importTranslations($replace);
-        $this->info('Done importing, processed ' . $counter . ' items!');
-
+        $this->info('Done importing, processed '.$counter.' items!');
     }
 
     /**
@@ -56,7 +49,7 @@ class ImportCommand extends Command
     protected function getOptions()
     {
         return [
-            [ 'replace', "R", InputOption::VALUE_NONE, 'Replace existing keys' ],
+            ['replace', 'R', InputOption::VALUE_NONE, 'Replace existing keys'],
         ];
     }
 }

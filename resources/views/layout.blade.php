@@ -26,6 +26,8 @@
         <h1 class="my-3 h2">@yield('documentTitle')</h1>
         <main id="content-wrapper" class="">
             @yield('content')
+            <?php if ($paginationEnabled) echo $translations->links()->toHtml(); ?>
+
         </main>
     </div>
     <span class="javascripts">

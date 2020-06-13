@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Barryvdh\TranslationManager\Models\Translation;
 use Illuminate\Support\Collection;
 
@@ -39,6 +40,19 @@ class Controller extends BaseController
             $translations[$translation->key][$translation->locale] = $translation;
         }
 
+        if ($this->manager->getConfig('pagination_enabled')) {
+            $total = count($translations);
+            $page = request()->get('page', 1);
+            $per_page = $this->manager->getConfig('per_page');
+            $offSet = ($page * $per_page) - $per_page;
+            $itemsForCurrentPage = array_slice($translations, $offSet, $per_page, true);
+            $prefix = $this->manager->getConfig('route')['prefix'];
+            $path = url("$prefix/view/$group");
+
+            $paginator = new LengthAwarePaginator($itemsForCurrentPage, $total, $per_page, $page);
+            $translations = $paginator->withPath($path);
+        }
+
         return view('translation-manager::'.$this->manager->getConfig('template').'.index')
             ->with('translations', $translations)
             ->with('locales', $locales)
@@ -47,6 +61,7 @@ class Controller extends BaseController
             ->with('numTranslations', $numTranslations)
             ->with('numChanged', $numChanged)
             ->with('editUrl', $group ? action('\Barryvdh\TranslationManager\Controller@postEdit', [$group]) : null)
+            ->with('paginationEnabled', $this->manager->getConfig('pagination_enabled'))
             ->with('deleteEnabled', $this->manager->getConfig('delete_enabled'));
     }
 

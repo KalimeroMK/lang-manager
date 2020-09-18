@@ -7,6 +7,7 @@ use Barryvdh\TranslationManager\Models\Translation;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 
 class Manager
@@ -203,8 +204,8 @@ class Manager
                     //TODO: This can probably be done in the regex, but I couldn't do it.
                     //skip keys which contain namespacing characters, unless they also contain a
                     //space, which makes it JSON.
-                    if ( !( str_contains( $key, '::' ) && str_contains( $key, '.' ) )
-                         || str_contains( $key, ' ' ) ) {
+                    if ( !( Str::contains( $key, '::' ) && Str::contains( $key, '.' ) )
+                         || Str::contains( $key, ' ' ) ) {
                         $stringKeys[] = $key;
                     }
                 }

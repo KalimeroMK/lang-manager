@@ -15,9 +15,9 @@
   ],
   "require": {
     "php": ">=7",
-    "illuminate/support": "^5.5|^6|^7|^8|^9|^10",
-    "illuminate/translation": "^5.5|^6|^7|^8|^9|^10",
-    "symfony/finder": "^3|^4|^5|^6"
+    "illuminate/support": "^5.5|^6|^7|^8|^9|^10|^11",
+    "illuminate/translation": "^5.5|^6|^7|^8|^9|^10|^11",
+    "symfony/finder": "^3|^4|^5|^6|^7"
   },
   "autoload": {
     "psr-4": {
@@ -34,5 +34,5 @@
       ]
     }
   },
-  "minimum-stability": "stable"
+  "minimum-stability": "dev"
 }

@@ -10,15 +10,15 @@ return [
     | The default group settings for the elFinder routes.
     |
     */
-    'route'          => [
-        'prefix'     => 'translations',
+    'route' => [
+        'prefix' => 'translations',
         'middleware' => 'auth',
     ],
 
     /**
      * Enable deletion of translations
      *
-     * @type boolean
+     * @type bool
      */
     'delete_enabled' => true,
 
@@ -46,12 +46,12 @@ return [
      *        'de',
      *    )
      */
-    'exclude_langs'  => [],
+    'exclude_langs' => [],
 
     /**
      * Export translations with keys output alphabetically.
      */
-    'sort_keys'     => false,
+    'sort_keys' => false,
 
     'trans_functions' => [
         'trans',
@@ -69,28 +69,26 @@ return [
     /**
      * Enable pagination of translations
      *
-     * @type boolean
+     * @type bool
      */
     'pagination_enabled' => false,
-
 
     /**
      * Define number of translations per page
      *
-     * @type integer
+     * @type int
      */
     'per_page' => 40,
-
 
     /* ------------------------------------------------------------------------------------------------
      | Set Views options
      | ------------------------------------------------------------------------------------------------
      | Here you can set The "extends" blade of index.blade.php
     */
-    'layout'          => 'translation-manager::layout',
+    'layout' => 'translation-manager::layout',
     /**
-     * Choose which  template to use [bootstrap3, bootstrap4 ]
+     * Choose which  template to use [bootstrap3, bootstrap4, bootstrap5 ]
      */
-    'template'        => 'bootstrap3',
+    'template' => 'bootstrap3',
 
 ];

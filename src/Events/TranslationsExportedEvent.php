@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kgbot
@@ -8,17 +9,12 @@
 
 namespace Barryvdh\TranslationManager\Events;
 
-
 class TranslationsExportedEvent
 {
-
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 }

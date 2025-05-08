@@ -1,0 +1,7 @@
+/.env
+/.idea
+/vendor
+/.phpintel
+.env
+.DS_Store
+/.docker/

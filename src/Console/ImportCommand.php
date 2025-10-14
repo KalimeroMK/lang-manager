@@ -1,9 +1,9 @@
 <?php
 
-namespace Barryvdh\TranslationManager\Console;
+namespace Kalimero\TranslationManager\Console;
 
-use Barryvdh\TranslationManager\Manager;
 use Illuminate\Console\Command;
+use Kalimero\TranslationManager\Manager;
 use Symfony\Component\Console\Input\InputOption;
 
 class ImportCommand extends Command
@@ -22,10 +22,7 @@ class ImportCommand extends Command
      */
     protected $description = 'Import translations from the PHP sources';
 
-    /**
-     * @var Manager
-     */
-    protected $manager;
+    protected \Kalimero\TranslationManager\Manager $manager;
 
     public function __construct(Manager $manager)
     {

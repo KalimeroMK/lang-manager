@@ -1,10 +1,13 @@
 {
-  "name": "barryvdh/laravel-translation-manager",
-  "description": "Manage Laravel Translations",
+  "name": "kalimero/laravel-translation-manager",
+  "description": "Enhanced Laravel Translation Manager - Fork of barryvdh/laravel-translation-manager with improved Bootstrap 4/5 and Tailwind CSS support",
   "keywords": [
     "laravel",
     "translations",
-    "translator"
+    "translator",
+    "bootstrap",
+    "tailwind",
+    "fork"
   ],
   "license": "MIT",
   "authors": [
@@ -14,7 +17,8 @@
     },
     {
       "name": "KalimeroMK",
-      "email": "zbogoevski@gmail.com"
+      "email": "zbogoevski@gmail.com",
+      "homepage": "https://github.com/KalimeroMK"
     }
   ],
   "require": {
@@ -26,12 +30,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Barryvdh\\TranslationManager\\": "src/"
+      "Kalimero\\TranslationManager\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Barryvdh\\TranslationManager\\Tests\\": "tests/"
+      "Kalimero\\TranslationManager\\Tests\\": "tests/"
     }
   },
   "extra": {
@@ -40,12 +44,29 @@
     },
     "laravel": {
       "providers": [
-        "Barryvdh\\TranslationManager\\ManagerServiceProvider"
+        "Kalimero\\TranslationManager\\ManagerServiceProvider"
       ]
     }
   },
-  "minimum-stability": "stable",
+  "scripts": {
+    "phpstan": "phpstan analyse",
+    "rector": "rector process --dry-run",
+    "rector:fix": "rector process",
+    "test": "phpunit",
+    "test:coverage": "phpunit --coverage-html coverage",
+    "test:unit": "phpunit --testsuite=Unit",
+    "test:feature": "phpunit --testsuite=Feature",
+    "test:all": [
+      "@phpstan",
+      "@rector",
+      "@test"
+    ]
+  },
   "require-dev": {
-    "laravel/pint": "^1.22"
+    "laravel/pint": "^1.22",
+    "rector/rector": "^2.2",
+    "larastan/larastan": "^3.7",
+    "phpunit/phpunit": "^12.3",
+    "orchestra/testbench": "^10.6"
   }
 }

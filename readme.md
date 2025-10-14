@@ -1,10 +1,11 @@
-## Laravel Translation Manager
+# Enhanced Laravel Translation Manager
 
-[![Tests](https://github.com/barryvdh/laravel-translation-manager/actions/workflows/run-tests.yml/badge.svg)](https://github.com/barryvdh/laravel-translation-manager/actions)
-[![Packagist License](https://poser.pugx.org/barryvdh/laravel-translation-manager/license.png)](http://choosealicense.com/licenses/mit/)
-[![Latest Stable Version](https://poser.pugx.org/barryvdh/laravel-translation-manager/version.png)](https://packagist.org/packages/barryvdh/laravel-translation-manager)
-[![Total Downloads](https://poser.pugx.org/barryvdh/laravel-translation-manager/d/total.png)](https://packagist.org/packages/barryvdh/laravel-translation-manager)
-[![Fruitcake](https://img.shields.io/badge/Powered%20By-Fruitcake-b2bc35.svg)](https://fruitcake.nl/)
+[![Tests](https://github.com/KalimeroMK/laravel-translation-manager/actions/workflows/run-tests.yml/badge.svg)](https://github.com/KalimeroMK/laravel-translation-manager/actions)
+[![Packagist License](https://poser.pugx.org/kalimero/laravel-translation-manager/license.png)](http://choosealicense.com/licenses/mit/)
+[![Latest Stable Version](https://poser.pugx.org/kalimero/laravel-translation-manager/version.png)](https://packagist.org/packages/kalimero/laravel-translation-manager)
+[![Total Downloads](https://poser.pugx.org/kalimero/laravel-translation-manager/d/total.png)](https://packagist.org/packages/kalimero/laravel-translation-manager)
+
+> **Fork Notice**: This is an enhanced fork of [barryvdh/laravel-translation-manager](https://github.com/barryvdh/laravel-translation-manager) with improved Bootstrap 4/5 and Tailwind CSS support, updated dependencies, and modern Laravel compatibility.
 
 This is a package to manage Laravel translation files.
 It does not replace the Translation system, only import/export the php files to a database and make them editable through a webinterface.
@@ -20,30 +21,39 @@ This way, translations can be saved in git history and no overhead is introduced
 
 ![Screenshot](http://i.imgur.com/4th2krf.png)
 
+## What's New in This Fork
+
+- ✅ **Enhanced Bootstrap 4/5 Support**: Updated CSS classes and improved responsive design
+- ✅ **Better Tailwind CSS Integration**: Modern Tailwind 3 classes and improved styling
+- ✅ **Updated Dependencies**: Compatible with Laravel 9-12
+- ✅ **Modern Namespace**: `Kalimero\TranslationManager` namespace
+- ✅ **Improved CDN Links**: Updated and reliable CDN resources
+- ✅ **Better Error Handling**: Enhanced error handling and validation
+- ✅ **Code Quality**: Improved code structure and Laravel best practices
+
 ## Installation
 
-Require this package in your composer.json and run composer update (or run `composer require barryvdh/laravel-translation-manager` directly):
+Require this package in your composer.json and run composer update (or run `composer require kalimero/laravel-translation-manager` directly):
 
-    composer require barryvdh/laravel-translation-manager
-
+    composer require kalimero/laravel-translation-manager
 
 You need to run the migrations for this package.
 
 ```
-php artisan vendor:publish --provider="Barryvdh\TranslationManager\ManagerServiceProvider" --tag=migrations
+php artisan vendor:publish --provider="Kalimero\TranslationManager\ManagerServiceProvider" --tag=migrations
 php artisan migrate
 ```
 
 You need to publish the config file for this package. This will add the file `config/translation-manager.php`, where you can configure this package.
 
 ```
-php artisan vendor:publish --provider="Barryvdh\TranslationManager\ManagerServiceProvider" --tag=config
+php artisan vendor:publish --provider="Kalimero\TranslationManager\ManagerServiceProvider" --tag=config
 ```
 
 In order to edit the default template, the views must be published as well. The views will then be placed in `resources/views/vendor/translation-manager`.
 
 ```
-php artisan vendor:publish --provider="Barryvdh\TranslationManager\ManagerServiceProvider" --tag=views
+php artisan vendor:publish --provider="Kalimero\TranslationManager\ManagerServiceProvider" --tag=views
 ```
 
 Routes are added in the ServiceProvider. You can set the group parameters for the routes in the configuration.
@@ -53,15 +63,14 @@ This example will make the translation manager available at `http://yourdomain.c
 
 If you would like to use auto translation using Google Translate API, install https://github.com/tanmuhittin/laravel-google-translate
 
-``` 
+```
 composer require tanmuhittin/laravel-google-translate
 php artisan vendor:publish --provider=Tanmuhittin\LaravelGoogleTranslate\LaravelGoogleTranslateServiceProvider
- ```
-
+```
 
 ### Middleware / Auth
 
-The configuration file by default only includes the `auth` middleware, but the latests changes in Laravel 5.2 makes it that session variables are only accessible when your route includes the `web` middleware. In order to make this package work on Laravel 5.2, you will have to change the route/middleware setting from the default 
+The configuration file by default only includes the `auth` middleware, but the latests changes in Laravel 5.2 makes it that session variables are only accessible when your route includes the `web` middleware. In order to make this package work on Laravel 5.2, you will have to change the route/middleware setting from the default
 
 ```
     'route' => [
@@ -82,7 +91,7 @@ to
     ],
 ```
 
-**NOTE:** *This is only needed in Laravel 5.2 (and up!)*
+**NOTE:** _This is only needed in Laravel 5.2 (and up!)_
 
 ## Usage
 
@@ -104,9 +113,9 @@ The import command will search through app/lang and load all strings in the data
 php artisan translations:import
 ```
 
-Translation strings from app/lang/locale.json files will be imported to the __json_ group.
-    
-Note: By default, only new strings are added. Translations already in the DB are kept the same. If you want to replace all values with the ones from the files, 
+Translation strings from app/lang/locale.json files will be imported to the \__json_ group.
+
+Note: By default, only new strings are added. Translations already in the DB are kept the same. If you want to replace all values with the ones from the files,
 add the `--replace` (or `-R`) option: `php artisan translations:import --replace`
 
 ### Find translations in source
@@ -118,8 +127,8 @@ This can be done through the webinterface, or via an Artisan command.
 ```
 php artisan translations:find
 ```
-    
-If your project uses translation strings as keys, these will be stored into then __json_ group. 
+
+If your project uses translation strings as keys, these will be stored into then \__json_ group.
 
 ### Export command
 
@@ -133,7 +142,7 @@ php artisan translations:export <group>
 
 For example, `php artisan translations:export reminders` when you have 2 locales (en/nl), will write to `app/lang/en/reminders.php` and `app/lang/nl/reminders.php`
 
-To export translation strings as keys to JSON files , use the `--json` (or `-J`) option: `php artisan translations:export --json`. This will import every entries from the __json_ group.
+To export translation strings as keys to JSON files , use the `--json` (or `-J`) option: `php artisan translations:export --json`. This will import every entries from the \__json_ group.
 
 ### Clean command
 
@@ -151,7 +160,6 @@ The reset command simply clears all translation in the database, so you can star
 php artisan translations:reset
 ```
 
-
 ### Detect missing translations
 
 Most translations can be found by using the Find command (see above), but in case you have dynamic keys (variables/automatic forms etc), it can be helpful to 'listen' to the missing translations.
@@ -159,7 +167,7 @@ To detect missing translations, we can swap the Laravel TranslationServiceProvid
 In your `config/app.php`, comment out the original TranslationServiceProvider and add the one from this package:
 
     //'Illuminate\Translation\TranslationServiceProvider',
-    'Barryvdh\TranslationManager\TranslationServiceProvider',
+    'Kalimero\TranslationManager\TranslationServiceProvider',
 
 This will extend the Translator and will create a new database entry, whenever a key is not found, so you have to visit the pages that use them.
 This way it shows up in the webinterface and can be edited and later exported.

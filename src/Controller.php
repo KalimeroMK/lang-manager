@@ -1,8 +1,7 @@
 <?php
 
-namespace Barryvdh\TranslationManager;
+namespace Kalimero\TranslationManager;
 
-use Barryvdh\TranslationManager\Models\Translation;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -14,13 +13,13 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Kalimero\TranslationManager\Models\Translation;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 class Controller extends BaseController
 {
-    /** @var Manager */
-    protected $manager;
+    protected \Kalimero\TranslationManager\Manager $manager;
 
     public function __construct(Manager $manager)
     {
@@ -28,7 +27,9 @@ class Controller extends BaseController
     }
 
     /**
-     * @param  string  $group
+     * Display the translation manager interface
+     *
+     * @param  string|null  $group
      * @return Application|Factory|View
      *
      * @throws ContainerExceptionInterface
@@ -40,7 +41,9 @@ class Controller extends BaseController
     }
 
     /**
-     * @param  string  $group
+     * Display the main translation manager interface
+     *
+     * @param  string|null  $group
      * @return Application|Factory|View
      *
      * @throws ContainerExceptionInterface
@@ -106,7 +109,7 @@ class Controller extends BaseController
             ->with('selectedModel', null)
             ->with('numTranslations', $numTranslations)
             ->with('numChanged', $numChanged)
-            ->with('editUrl', $group ? action('\Barryvdh\TranslationManager\Controller@postEdit', [$group]) : null)
+            ->with('editUrl', $group ? action('\Kalimero\TranslationManager\Controller@postEdit', [$group]) : null)
             ->with('paginationEnabled', $this->manager->getConfig('pagination_enabled'))
             ->with('deleteEnabled', $this->manager->getConfig('delete_enabled'));
     }
@@ -175,7 +178,7 @@ class Controller extends BaseController
             ->with('selectedModel', $selectedModel)
             ->with('numModelTranslations', $numModelTranslations)
             ->with('numTranslations', $numTranslations)
-            ->with('editUrl', action('\Barryvdh\TranslationManager\Controller@postEditModel', [$selectedModel]))
+            ->with('editUrl', action('\Kalimero\TranslationManager\Controller@postEditModel', [$selectedModel]))
             ->with('paginationEnabled', $this->manager->getConfig('pagination_enabled'))
             ->with('deleteEnabled', $this->manager->getConfig('delete_enabled'));
     }
@@ -285,7 +288,7 @@ class Controller extends BaseController
     {
         $numFound = $this->manager->findTranslations();
 
-        return ['status' => 'ok', 'counter' => (int) $numFound];
+        return ['status' => 'ok', 'counter' => $numFound];
     }
 
     public function postPublish($group = null): array
@@ -305,7 +308,7 @@ class Controller extends BaseController
     {
         $group = str_replace('.', '', $request->input('new-group'));
         if ($group) {
-            return redirect()->action('\Barryvdh\TranslationManager\Controller@getView', $group);
+            return redirect()->action('\Kalimero\TranslationManager\Controller@getView', $group);
         }
 
         return redirect()->back();
@@ -358,7 +361,7 @@ class Controller extends BaseController
                     'name' => $newLocale.'|'.$base_string->key,
                 ]);
                 app()->call(
-                    'Barryvdh\TranslationManager\Controller@postEdit',
+                    'Kalimero\TranslationManager\Controller@postEdit',
                     [
                         'group' => $group,
                     ]

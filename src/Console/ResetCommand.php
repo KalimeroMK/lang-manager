@@ -1,9 +1,9 @@
 <?php
 
-namespace Barryvdh\TranslationManager\Console;
+namespace Kalimero\TranslationManager\Console;
 
-use Barryvdh\TranslationManager\Manager;
 use Illuminate\Console\Command;
+use Kalimero\TranslationManager\Manager;
 
 class ResetCommand extends Command
 {
@@ -21,10 +21,7 @@ class ResetCommand extends Command
      */
     protected $description = 'Delete all translations from the database';
 
-    /**
-     * @var Manager
-     */
-    protected $manager;
+    protected \Kalimero\TranslationManager\Manager $manager;
 
     public function __construct(Manager $manager)
     {

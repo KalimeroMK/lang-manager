@@ -1,6 +1,6 @@
 <?php
 
-namespace Barryvdh\TranslationManager;
+namespace Kalimero\TranslationManager;
 
 use Illuminate\Translation\Translator as LaravelTranslator;
 
@@ -11,10 +11,7 @@ class Translator extends LaravelTranslator
      */
     protected $events;
 
-    /**
-     * @var \Barryvdh\TranslationManager\Manager
-     */
-    private $manager;
+    private ?\Kalimero\TranslationManager\Manager $manager = null;
 
     /**
      * Get the translation for the given key.
@@ -39,6 +36,11 @@ class Translator extends LaravelTranslator
     public function setTranslationManager(Manager $manager): void
     {
         $this->manager = $manager;
+    }
+
+    public function getTranslationManager(): ?Manager
+    {
+        return $this->manager;
     }
 
     protected function notifyMissingKey($key): void

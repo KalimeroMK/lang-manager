@@ -1,40 +1,30 @@
 <?php
 
-namespace Barryvdh\TranslationManager;
+namespace Kalimero\TranslationManager;
 
-use Barryvdh\TranslationManager\Events\TranslationsExportedEvent;
-use Barryvdh\TranslationManager\Models\Translation;
+use const PHP_EOL;
+
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Kalimero\TranslationManager\Events\TranslationsExportedEvent;
+use Kalimero\TranslationManager\Models\Translation;
 use Lang;
 use Symfony\Component\Finder\Finder;
-
 use Symfony\Component\Finder\SplFileInfo;
-
-use const PHP_EOL;
 
 class Manager
 {
     public const JSON_GROUP = '_json';
 
-    /**
-     * @var Application
-     */
-    protected $app;
+    protected \Illuminate\Contracts\Foundation\Application $app;
 
-    /**
-     * @var Filesystem
-     */
-    protected $files;
+    protected \Illuminate\Filesystem\Filesystem $files;
 
-    /**
-     * @var Dispatcher
-     */
-    protected $events;
+    protected \Illuminate\Contracts\Events\Dispatcher $events;
 
     /**
      * @var array
@@ -82,6 +72,16 @@ class Manager
         return ($result && is_array($result)) ? $result : [];
     }
 
+    /**
+     * Import translations from language files
+     *
+     * @param  bool  $replace  Whether to replace existing translations
+     * @param  string|null  $base  Base path for language files
+     * @param  bool|string  $import_group  Specific group to import
+     * @return int Number of imported translations
+     *
+     * @throws FileNotFoundException
+     */
     public function importTranslations($replace = false, $base = null, $import_group = false): int
     {
         $counter = 0;
@@ -385,7 +385,7 @@ class Manager
         return $array;
     }
 
-    public function jsonSet(array &$array, $key, $value)
+    public function jsonSet(?array &$array, $key, $value)
     {
         if (is_null($key)) {
             return $array = $value;
@@ -454,7 +454,7 @@ class Manager
     /**
      * @throws FileNotFoundException
      */
-    public function removeLocale($locale)
+    public function removeLocale($locale): ?bool
     {
         if (! $locale) {
             return false;

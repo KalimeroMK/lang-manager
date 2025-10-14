@@ -1,6 +1,6 @@
 <?php
 
-namespace Barryvdh\TranslationManager;
+namespace Kalimero\TranslationManager;
 
 use Illuminate\Translation\TranslationServiceProvider as BaseTranslationServiceProvider;
 
@@ -13,7 +13,7 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
     {
         $this->registerLoader();
 
-        $this->app->singleton('translator', function (array $app): \Barryvdh\TranslationManager\Translator {
+        $this->app->singleton('translator', function ($app): \Kalimero\TranslationManager\Translator {
             $loader = $app['translation.loader'];
 
             // When registering the translator component, we'll need to set the default

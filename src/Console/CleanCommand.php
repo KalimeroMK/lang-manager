@@ -1,9 +1,9 @@
 <?php
 
-namespace Barryvdh\TranslationManager\Console;
+namespace Kalimero\TranslationManager\Console;
 
-use Barryvdh\TranslationManager\Manager;
 use Illuminate\Console\Command;
+use Kalimero\TranslationManager\Manager;
 
 class CleanCommand extends Command
 {
@@ -21,10 +21,7 @@ class CleanCommand extends Command
      */
     protected $description = 'Clean empty translations';
 
-    /**
-     * @var Manager
-     */
-    protected $manager;
+    protected \Kalimero\TranslationManager\Manager $manager;
 
     public function __construct(Manager $manager)
     {

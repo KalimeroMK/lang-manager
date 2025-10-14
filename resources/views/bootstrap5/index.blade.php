@@ -1,5 +1,5 @@
 @extends(config('translation-manager.layout'))
-@php($controller = \Barryvdh\TranslationManager\Controller::class)
+@php($controller = \Kalimero\TranslationManager\Controller::class)
 
 @section('documentTitle')
     Translation Manager
@@ -26,12 +26,14 @@
 @stop
 
 @push('styles')
-    {{--<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JoseVte/x-editable@1.5.3/dist/bootstrap5-editable/css/bootstrap-editable.css"/>
 @endpush
 
 @push('scripts')
-    {{--<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/JoseVte/x-editable@1.5.3/dist/bootstrap5-editable/js/bootstrap-editable.min.js"></script>
     @include('translation-manager::jsScript')
 @endpush

@@ -1,6 +1,6 @@
 <?php
 
-namespace Barryvdh\TranslationManager\Models;
+namespace Kalimero\TranslationManager\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;

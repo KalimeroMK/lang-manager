@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Barryvdh\TranslationManager\Controller;
 use Illuminate\Support\Facades\Route;
+use Kalimero\TranslationManager\Controller;
 
-$config = array_merge(config('translation-manager.route'), ['namespace' => '\Barryvdh\TranslationManager']);
-Route::group($config, function ($router) {
+$config = array_merge(config('translation-manager.route'), ['namespace' => '\Kalimero\TranslationManager']);
+Route::group($config, function ($router): void {
     $router->get('/model/{selectedModel?}', [Controller::class, 'getModelView'])->where('selectedModel', '.*');
     $router->get('/view/{groupKey?}', [Controller::class, 'getView'])->where('groupKey', '.*');
     $router->get('/{groupKey?}', [Controller::class, 'getIndex'])->where('groupKey', '.*');

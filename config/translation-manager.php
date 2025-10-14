@@ -99,7 +99,8 @@ return [
     'layout' => 'translation-manager::layout',
 
     /*
-     * Choose which  template to use [bootstrap3, bootstrap4, bootstrap5, tailwind3 ]
+     * Choose which template to use [bootstrap3, bootstrap4, bootstrap5, tailwind3]
+     * Default: bootstrap5 for modern Laravel applications
      */
-    'template' => 'tailwind3',
+    'template' => 'bootstrap5',
 ];

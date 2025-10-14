@@ -1,5 +1,5 @@
 @extends(config('translation-manager.layout'))
-@php($controller = \Barryvdh\TranslationManager\Controller::class)
+@php($controller = \Kalimero\TranslationManager\Controller::class)
 
 @section('documentTitle')
     Translation Manager
@@ -26,14 +26,13 @@
 @stop
 
 @push('styles')
-    {{--<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>--}}
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JoseVte/x-editable@1.5.3/dist/jquery-editable/css/jquery-editable.css"/>
 @endpush
 
 @push('scripts')
-    {{--<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/vadikom/poshytip@master/src/jquery.poshytip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/JoseVte/x-editable@1.5.3/dist/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
-
     @include('translation-manager::jsScript')
 @endpush

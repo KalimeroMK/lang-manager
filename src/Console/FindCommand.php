@@ -1,9 +1,9 @@
 <?php
 
-namespace Barryvdh\TranslationManager\Console;
+namespace Kalimero\TranslationManager\Console;
 
-use Barryvdh\TranslationManager\Manager;
 use Illuminate\Console\Command;
+use Kalimero\TranslationManager\Manager;
 
 class FindCommand extends Command
 {
@@ -21,10 +21,7 @@ class FindCommand extends Command
      */
     protected $description = 'Find translations in php/twig files';
 
-    /**
-     * @var Manager
-     */
-    protected $manager;
+    protected \Kalimero\TranslationManager\Manager $manager;
 
     public function __construct(Manager $manager)
     {

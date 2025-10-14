@@ -1,11 +1,14 @@
 <?php
 
-namespace Barryvdh\TranslationManager;
+namespace Kalimero\TranslationManager;
 
 use Illuminate\Support\ServiceProvider;
 
 class ManagerServiceProvider extends ServiceProvider
 {
+    /**
+     * Register the service provider
+     */
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/translation-manager.php', 'translation-manager');
@@ -21,17 +24,21 @@ class ManagerServiceProvider extends ServiceProvider
         ]);
     }
 
+    /**
+     * Register console commands
+     */
     private function registerCommands(array $commands): void
     {
         foreach ($commands as $name => $class) {
-            $this->app->singleton("command.translation-manager.{$name}", function (array $app) use ($class) {
-                return new $class($app['translation-manager']);
-            });
+            $this->app->singleton("command.translation-manager.{$name}", fn ($app): object => new $class($app['translation-manager']));
 
             $this->commands("command.translation-manager.{$name}");
         }
     }
 
+    /**
+     * Bootstrap the application services
+     */
     public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'translation-manager');
@@ -47,6 +54,9 @@ class ManagerServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/routes.php');
     }
 
+    /**
+     * Get the services provided by the provider
+     */
     public function provides(): array
     {
         return [

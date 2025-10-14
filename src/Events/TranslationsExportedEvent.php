@@ -7,6 +7,6 @@
  * Time: 12:40 PM.
  */
 
-namespace Barryvdh\TranslationManager\Events;
+namespace Kalimero\TranslationManager\Events;
 
 class TranslationsExportedEvent {}

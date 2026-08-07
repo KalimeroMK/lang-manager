@@ -25,7 +25,7 @@ This way, translations can be saved in git history and no overhead is introduced
 
 - ✅ **Enhanced Bootstrap 4/5 Support**: Updated CSS classes and improved responsive design
 - ✅ **Better Tailwind CSS Integration**: Modern Tailwind 3 classes and improved styling
-- ✅ **Updated Dependencies**: Compatible with Laravel 9-12
+- ✅ **Updated Dependencies**: Compatible with Laravel 9-13
 - ✅ **Modern Namespace**: `Kalimero\TranslationManager` namespace
 - ✅ **Improved CDN Links**: Updated and reliable CDN resources
 - ✅ **Better Error Handling**: Enhanced error handling and validation

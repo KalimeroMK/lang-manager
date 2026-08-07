@@ -92,6 +92,14 @@ class Manager
             $vendor = false;
         }
 
+        // Laravel 11 stopped shipping a lang/ directory - it only appears after
+        // `php artisan lang:publish`. Filesystem::directories() goes through
+        // Symfony Finder, which throws DirectoryNotFoundException on a missing
+        // path, so scanning has to be skipped rather than attempted.
+        if (! $this->files->isDirectory($base)) {
+            return $counter;
+        }
+
         foreach ($this->files->directories($base) as $langPath) {
             $locale = basename($langPath);
 
@@ -412,9 +420,12 @@ class Manager
                 [config('app.locale')],
                 Translation::groupBy('locale')->pluck('locale')->toArray()
             );
-            foreach ($this->files->directories($this->app->langPath()) as $localeDir) {
-                if (($name = $this->files->name($localeDir)) !== 'vendor') {
-                    $locales[] = $name;
+            // See importTranslations(): the lang/ directory may not exist.
+            if ($this->files->isDirectory($this->app->langPath())) {
+                foreach ($this->files->directories($this->app->langPath()) as $localeDir) {
+                    if (($name = $this->files->name($localeDir)) !== 'vendor') {
+                        $locales[] = $name;
+                    }
                 }
             }
 
@@ -437,7 +448,8 @@ class Manager
         $this->ignoreLocales = $this->getIgnoredLocales();
 
         if (! $this->files->exists($localeDir) || ! $this->files->isDirectory($localeDir)) {
-            return $this->files->makeDirectory($localeDir);
+            // Recursive: lang/ itself may not exist yet on Laravel 11+.
+            return $this->files->makeDirectory($localeDir, 0755, true);
         }
 
         return true;

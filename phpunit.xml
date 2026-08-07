@@ -28,7 +28,10 @@
     </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
-        <env name="APP_KEY" value="base64:test-key-for-testing"/>
+        <!-- Must be a base64-encoded 32-byte key. "test-key-for-testing" is not
+             valid base64, so the Encrypter rejected it and every feature test
+             that issues an HTTP request errored out. -->
+        <env name="APP_KEY" value="base64:sTb9slGNY3LJA3HMyuESwPIoY1iOoE3oOyOol2jigeU="/>
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
         <env name="CACHE_DRIVER" value="array"/>

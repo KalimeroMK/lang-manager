@@ -20,12 +20,6 @@ class Manager
 {
     public const JSON_GROUP = '_json';
 
-    protected \Illuminate\Contracts\Foundation\Application $app;
-
-    protected \Illuminate\Filesystem\Filesystem $files;
-
-    protected \Illuminate\Contracts\Events\Dispatcher $events;
-
     /**
      * @var array
      */
@@ -41,20 +35,14 @@ class Manager
      */
     protected $ignoreLocales;
 
-    /**
-     * @var string
-     */
-    protected $ignoreFilePath;
+    protected string $ignoreFilePath;
 
     /**
      * @throws FileNotFoundException
      */
-    public function __construct(Application $app, Filesystem $files, Dispatcher $events)
+    public function __construct(protected Application $app, protected Filesystem $files, protected Dispatcher $events)
     {
-        $this->app = $app;
-        $this->files = $files;
-        $this->events = $events;
-        $this->config = $app['config']['translation-manager'];
+        $this->config = $this->app['config']['translation-manager'];
         $this->ignoreFilePath = storage_path('.ignore_locales');
         $this->ignoreLocales = $this->getIgnoredLocales();
     }
@@ -62,7 +50,7 @@ class Manager
     /**
      * @throws FileNotFoundException
      */
-    protected function getIgnoredLocales()
+    protected function getIgnoredLocales(): array
     {
         if (! $this->files->exists($this->ignoreFilePath)) {
             return [];
@@ -247,7 +235,7 @@ class Manager
                     // TODO: This can probably be done in the regex, but I couldn't do it.
                     // skip keys which contain namespacing characters, unless they also contain a
                     // space, which makes it JSON.
-                    if (Str::contains($key, ' ') || ! (Str::contains($key, '::') && Str::contains($key, '.'))) {
+                    if (Str::contains($key, ' ') || (! Str::contains($key, '::') || ! Str::contains($key, '.'))) {
                         $stringKeys[] = $key;
                     }
                 }

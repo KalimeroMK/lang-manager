@@ -1,34 +1,12 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
 parameters:
     paths:
         - src/
-    
-    # The level 8 is the highest level
+
     level: 5
-    
-    ignoreErrors:
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::groupBy\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::select\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::orderBy\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::whereNotIn\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::where\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::whereNull\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::whereNotNull\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::pluck\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::get\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::count\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::firstOrNew\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::firstOrCreate\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::save\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::delete\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::update\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::exists\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::findOrFail\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::find\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::truncate\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::selectDistinctGroup\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::ofTranslatedGroup\(\)#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::orderByGroupKeys\(\)#'
-    
-    excludePaths:
-        - vendor/
-        - tests (?)
+
+    # The remaining reports are defensive runtime checks that PHPStan only considers
+    # redundant because it trusts the PHPDoc types. The guards stay.
+    treatPhpDocTypesAsCertain: false

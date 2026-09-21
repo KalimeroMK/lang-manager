@@ -22,11 +22,8 @@ class ImportCommand extends Command
      */
     protected $description = 'Import translations from the PHP sources';
 
-    protected \Kalimero\TranslationManager\Manager $manager;
-
-    public function __construct(Manager $manager)
+    public function __construct(protected Manager $manager)
     {
-        $this->manager = $manager;
         parent::__construct();
     }
 

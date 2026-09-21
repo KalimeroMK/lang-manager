@@ -2,25 +2,26 @@
 
 namespace Kalimero\TranslationManager\Tests\Unit;
 
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 use Kalimero\TranslationManager\Manager;
 use Kalimero\TranslationManager\Models\Translation;
 use Kalimero\TranslationManager\Tests\TestCase;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Support\Facades\File;
 
 class ManagerTest extends TestCase
 {
     protected Manager $manager;
+
     protected Filesystem $files;
+
     protected Dispatcher $events;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
-        $this->files = new Filesystem();
+
+        $this->files = new Filesystem;
         $this->events = app('events');
         $this->manager = new Manager($this->app, $this->files, $this->events);
     }
@@ -39,24 +40,24 @@ class ManagerTest extends TestCase
     {
         // Create test language files
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        if (!is_dir($langPath.'/en')) {
+        if (! is_dir($langPath.'/en')) {
             File::makeDirectory($langPath.'/en', 0755, true);
         }
-        if (!is_dir($langPath.'/mk')) {
+        if (! is_dir($langPath.'/mk')) {
             File::makeDirectory($langPath.'/mk', 0755, true);
         }
-        
+
         // Create test translation files
         File::put($langPath.'/en/test.php', "<?php\nreturn ['hello' => 'Hello', 'world' => 'World'];");
         File::put($langPath.'/mk/test.php', "<?php\nreturn ['hello' => 'Здраво', 'world' => 'Свет'];");
-        
+
         $count = $this->manager->importTranslations();
-        
+
         $this->assertGreaterThan(0, $count);
-        
+
         // Check if ltm_translations were imported
         $this->assertDatabaseHas('ltm_translations', [
             'locale' => 'en',
@@ -64,7 +65,7 @@ class ManagerTest extends TestCase
             'key' => 'hello',
             'value' => 'Hello',
         ]);
-        
+
         $this->assertDatabaseHas('ltm_translations', [
             'locale' => 'mk',
             'group' => 'test',
@@ -83,27 +84,27 @@ class ManagerTest extends TestCase
             'value' => 'Old Value',
             'status' => Translation::STATUS_SAVED,
         ]);
-        
+
         // Create test language file
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        if (!is_dir($langPath.'/en')) {
+        if (! is_dir($langPath.'/en')) {
             File::makeDirectory($langPath.'/en', 0755, true);
         }
         File::put($langPath.'/en/test.php', "<?php\nreturn ['hello' => 'New Value'];");
-        
+
         $count = $this->manager->importTranslations(true);
-        
+
         $this->assertGreaterThan(0, $count);
-        
+
         // Check if translation was replaced
         $translation = Translation::where('locale', 'en')
             ->where('group', 'test')
             ->where('key', 'hello')
             ->first();
-            
+
         $this->assertEquals('New Value', $translation->value);
     }
 
@@ -116,24 +117,24 @@ class ManagerTest extends TestCase
             $world = __("test.world");
             $choice = trans_choice("test.choice", 1);
         ');
-        
+
         $count = $this->manager->findTranslations();
-        
+
         $this->assertGreaterThan(0, $count);
-        
+
         // Check if ltm_translations were found
         $this->assertDatabaseHas('ltm_translations', [
             'locale' => 'en',
             'group' => 'test',
             'key' => 'hello',
         ]);
-        
+
         $this->assertDatabaseHas('ltm_translations', [
             'locale' => 'en',
             'group' => 'test',
             'key' => 'world',
         ]);
-        
+
         // Cleanup
         File::delete($testFile);
     }
@@ -141,7 +142,7 @@ class ManagerTest extends TestCase
     public function test_missing_key(): void
     {
         $this->manager->missingKey('*', 'test', 'missing_key');
-        
+
         $this->assertDatabaseHas('ltm_translations', [
             'locale' => 'en',
             'group' => 'test',
@@ -159,7 +160,7 @@ class ManagerTest extends TestCase
             'value' => 'Hello',
             'status' => Translation::STATUS_CHANGED,
         ]);
-        
+
         Translation::create([
             'locale' => 'mk',
             'group' => 'test',
@@ -167,28 +168,28 @@ class ManagerTest extends TestCase
             'value' => 'Здраво',
             'status' => Translation::STATUS_CHANGED,
         ]);
-        
+
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        if (!is_dir($langPath.'/en')) {
+        if (! is_dir($langPath.'/en')) {
             File::makeDirectory($langPath.'/en', 0755, true);
         }
-        if (!is_dir($langPath.'/mk')) {
+        if (! is_dir($langPath.'/mk')) {
             File::makeDirectory($langPath.'/mk', 0755, true);
         }
-        
+
         $this->manager->exportTranslations('test');
-        
+
         // Check if files were created
         $this->assertFileExists($langPath.'/en/test.php');
         $this->assertFileExists($langPath.'/mk/test.php');
-        
+
         // Check file contents
         $enContent = include $langPath.'/en/test.php';
         $mkContent = include $langPath.'/mk/test.php';
-        
+
         $this->assertEquals('Hello', $enContent['hello']);
         $this->assertEquals('Здраво', $mkContent['hello']);
     }
@@ -203,7 +204,7 @@ class ManagerTest extends TestCase
             'value' => 'Hello',
             'status' => Translation::STATUS_CHANGED,
         ]);
-        
+
         Translation::create([
             'locale' => 'mk',
             'group' => '_json',
@@ -211,22 +212,22 @@ class ManagerTest extends TestCase
             'value' => 'Здраво',
             'status' => Translation::STATUS_CHANGED,
         ]);
-        
+
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        
+
         $this->manager->exportTranslations(null, true);
-        
+
         // Check if JSON files were created
         $this->assertFileExists($langPath.'/en.json');
         $this->assertFileExists($langPath.'/mk.json');
-        
+
         // Check file contents
         $enContent = json_decode(File::get($langPath.'/en.json'), true);
         $mkContent = json_decode(File::get($langPath.'/mk.json'), true);
-        
+
         $this->assertEquals('Hello', $enContent['Hello']);
         $this->assertEquals('Здраво', $mkContent['Hello']);
     }
@@ -240,23 +241,23 @@ class ManagerTest extends TestCase
             'key' => 'empty',
             'value' => null,
         ]);
-        
+
         Translation::create([
             'locale' => 'en',
             'group' => 'test',
             'key' => 'valid',
             'value' => 'Valid Value',
         ]);
-        
+
         $this->manager->cleanTranslations();
-        
+
         // Check that null ltm_translations were deleted
         $this->assertDatabaseMissing('ltm_translations', [
             'locale' => 'en',
             'group' => 'test',
             'key' => 'empty',
         ]);
-        
+
         // Check that valid ltm_translations remain
         $this->assertDatabaseHas('ltm_translations', [
             'locale' => 'en',
@@ -275,15 +276,15 @@ class ManagerTest extends TestCase
             'key' => 'hello',
             'value' => 'Hello',
         ]);
-        
+
         $this->assertDatabaseHas('ltm_translations', [
             'locale' => 'en',
             'group' => 'test',
             'key' => 'hello',
         ]);
-        
+
         $this->manager->truncateTranslations();
-        
+
         $this->assertDatabaseCount('ltm_translations', 0);
     }
 
@@ -296,28 +297,28 @@ class ManagerTest extends TestCase
             'key' => 'hello',
             'value' => 'Hello',
         ]);
-        
+
         Translation::create([
             'locale' => 'mk',
             'group' => 'test',
             'key' => 'hello',
             'value' => 'Здраво',
         ]);
-        
+
         // Create test language directories
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        if (!is_dir($langPath.'/en')) {
+        if (! is_dir($langPath.'/en')) {
             File::makeDirectory($langPath.'/en', 0755, true);
         }
-        if (!is_dir($langPath.'/mk')) {
+        if (! is_dir($langPath.'/mk')) {
             File::makeDirectory($langPath.'/mk', 0755, true);
         }
-        
+
         $locales = $this->manager->getLocales();
-        
+
         $this->assertContains('en', $locales);
         $this->assertContains('mk', $locales);
     }
@@ -325,12 +326,12 @@ class ManagerTest extends TestCase
     public function test_add_locale(): void
     {
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        
+
         $result = $this->manager->addLocale('fr');
-        
+
         $this->assertTrue($result);
         $this->assertDirectoryExists($langPath.'/fr');
     }
@@ -344,11 +345,11 @@ class ManagerTest extends TestCase
             'key' => 'hello',
             'value' => 'Bonjour',
         ]);
-        
+
         $result = $this->manager->removeLocale('fr');
-        
+
         $this->assertNull($result);
-        
+
         // Check that ltm_translations were deleted
         $this->assertDatabaseMissing('ltm_translations', [
             'locale' => 'fr',
@@ -359,7 +360,7 @@ class ManagerTest extends TestCase
     {
         $config = $this->manager->getConfig();
         $this->assertIsArray($config);
-        
+
         $template = $this->manager->getConfig('template');
         $this->assertEquals('bootstrap5', $template);
     }

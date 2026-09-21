@@ -2,6 +2,7 @@
 
 namespace Kalimero\TranslationManager;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Translation\TranslationServiceProvider as BaseTranslationServiceProvider;
 
 class TranslationServiceProvider extends BaseTranslationServiceProvider
@@ -13,7 +14,7 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
     {
         $this->registerLoader();
 
-        $this->app->singleton('translator', function ($app): \Kalimero\TranslationManager\Translator {
+        $this->app->singleton('translator', function (Application $app): Translator {
             $loader = $app['translation.loader'];
 
             // When registering the translator component, we'll need to set the default

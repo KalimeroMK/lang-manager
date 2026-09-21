@@ -33,17 +33,17 @@ class TranslationTest extends TestCase
 
     public function test_translation_fillable_attributes(): void
     {
-        $translation = new Translation();
-        
-        // Since the model uses $guarded instead of $fillable, 
+        $translation = new Translation;
+
+        // Since the model uses $guarded instead of $fillable,
         // we test that the guarded attributes are properly set
         $guarded = $translation->getGuarded();
-        
+
         $this->assertIsArray($guarded);
         $this->assertContains('id', $guarded);
         $this->assertContains('created_at', $guarded);
         $this->assertContains('updated_at', $guarded);
-        
+
         // Test that we can create a translation with the expected attributes
         $translation = Translation::create([
             'locale' => 'en',
@@ -52,7 +52,7 @@ class TranslationTest extends TestCase
             'value' => 'Hello',
             'status' => Translation::STATUS_SAVED,
         ]);
-        
+
         $this->assertEquals('en', $translation->locale);
         $this->assertEquals('test', $translation->group);
         $this->assertEquals('hello', $translation->key);
@@ -192,7 +192,7 @@ class TranslationTest extends TestCase
     public function test_translation_can_have_long_value(): void
     {
         $longValue = str_repeat('This is a very long translation value. ', 100);
-        
+
         $translation = Translation::create([
             'locale' => 'en',
             'group' => 'test',
@@ -206,7 +206,7 @@ class TranslationTest extends TestCase
     public function test_translation_can_have_special_characters(): void
     {
         $specialValue = 'Hello 世界! 🌍 Привет мир!';
-        
+
         $translation = Translation::create([
             'locale' => 'en',
             'group' => 'test',

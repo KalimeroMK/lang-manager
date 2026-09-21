@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kalimero\TranslationManager\Console;
 
 use Illuminate\Console\Command;
@@ -21,11 +23,8 @@ class FindCommand extends Command
      */
     protected $description = 'Find translations in php/twig files';
 
-    protected \Kalimero\TranslationManager\Manager $manager;
-
-    public function __construct(Manager $manager)
+    public function __construct(protected Manager $manager)
     {
-        $this->manager = $manager;
         parent::__construct();
     }
 
@@ -34,7 +33,7 @@ class FindCommand extends Command
      */
     public function handle(): void
     {
-        $counter = $this->manager->findTranslations(null);
+        $counter = $this->manager->findTranslations();
         $this->info('Done importing, processed '.$counter.' items!');
     }
 }

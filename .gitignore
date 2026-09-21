@@ -1,5 +1,7 @@
-/vendor
-composer.phar
+/vendor/
+/.idea
+/.phpunit.cache
+/.phpunit.result.cache
+/coverage
+coverage.txt
 composer.lock
-.DS_Store
-.idea

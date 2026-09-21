@@ -19,12 +19,7 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class Controller extends BaseController
 {
-    protected \Kalimero\TranslationManager\Manager $manager;
-
-    public function __construct(Manager $manager)
-    {
-        $this->manager = $manager;
-    }
+    public function __construct(protected Manager $manager) {}
 
     /**
      * Display the translation manager interface
@@ -106,7 +101,7 @@ class Controller extends BaseController
             ->with('groups', $groups)
             ->with('models', $models)
             ->with('group', $group)
-            ->with('selectedModel', null)
+            ->with('selectedModel')
             ->with('numTranslations', $numTranslations)
             ->with('numChanged', $numChanged)
             ->with('editUrl', $group ? action('\Kalimero\TranslationManager\Controller@postEdit', [$group]) : null)
@@ -174,7 +169,7 @@ class Controller extends BaseController
             ->with('translations', $translations)
             ->with('locales', $locales)
             ->with('models', $models)
-            ->with('group', null)
+            ->with('group')
             ->with('selectedModel', $selectedModel)
             ->with('numModelTranslations', $numModelTranslations)
             ->with('numTranslations', $numTranslations)
@@ -213,7 +208,7 @@ class Controller extends BaseController
         return redirect()->back();
     }
 
-    public function postEdit($group = null)
+    public function postEdit($group = null): ?array
     {
         if (! in_array($group, $this->manager->getConfig('exclude_groups'), true)) {
             $name = request()->get('name');
@@ -235,7 +230,7 @@ class Controller extends BaseController
         return null;
     }
 
-    public function postEditModel($selectedModel)
+    public function postEditModel($selectedModel): ?array
     {
         $models = [];
         foreach (config('translation-manager.models') as $modelClass) {
@@ -265,7 +260,7 @@ class Controller extends BaseController
         return null;
     }
 
-    public function postDelete($group, $key)
+    public function postDelete($group, $key): ?array
     {
         if ($this->manager->getConfig('delete_enabled') && ! in_array($group, $this->manager->getConfig('exclude_groups'), true)) {
             Translation::where('group', $group)->where('key', $key)->delete();

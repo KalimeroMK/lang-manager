@@ -3,34 +3,11 @@
 namespace Kalimero\TranslationManager\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
-use Kalimero\TranslationManager\Controller;
 use Kalimero\TranslationManager\Models\Translation;
 use Kalimero\TranslationManager\Tests\TestCase;
 
 class ControllerTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Register routes for testing
-        Route::middleware('web')->group(function () {
-            Route::get('/translations', [Controller::class, 'getIndex']);
-            Route::get('/translations/{group}', [Controller::class, 'getView']);
-            Route::post('/translations/add/{group}', [Controller::class, 'postAdd']);
-            Route::post('/translations/edit/{group}', [Controller::class, 'postEdit']);
-            Route::post('/translations/delete/{group}/{key}', [Controller::class, 'postDelete']);
-            Route::post('/translations/import', [Controller::class, 'postImport']);
-            Route::post('/translations/find', [Controller::class, 'postFind']);
-            Route::post('/translations/publish/{group}', [Controller::class, 'postPublish']);
-            Route::post('/translations/groups/add', [Controller::class, 'postAddGroup']);
-            Route::post('/translations/locales/add', [Controller::class, 'postAddLocale']);
-            Route::post('/translations/locales/remove', [Controller::class, 'postRemoveLocale']);
-            Route::post('/translations/translate-missing', [Controller::class, 'postTranslateMissing']);
-        });
-    }
-
     public function test_can_access_translation_manager_index(): void
     {
         $response = $this->get('/translations');

@@ -2,8 +2,9 @@
 
 namespace Kalimero\TranslationManager\Models;
 
-use DB;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Translation model.
@@ -14,8 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $group
  * @property string $key
  * @property string $value
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Translation extends Model
 {
@@ -43,16 +44,10 @@ class Translation extends Model
 
     public function scopeSelectDistinctGroup($query)
     {
-        $select = '';
-
-        switch (DB::getDriverName()) {
-            case 'mysql':
-                $select = 'DISTINCT `group`';
-                break;
-            default:
-                $select = 'DISTINCT "group"';
-                break;
-        }
+        $select = match (DB::getDriverName()) {
+            'mysql' => 'DISTINCT `group`',
+            default => 'DISTINCT "group"',
+        };
 
         return $query->select(DB::raw($select));
     }

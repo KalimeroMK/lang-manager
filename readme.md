@@ -1,9 +1,9 @@
 # Enhanced Laravel Translation Manager
 
 [![Tests](https://github.com/KalimeroMK/laravel-translation-manager/actions/workflows/run-tests.yml/badge.svg)](https://github.com/KalimeroMK/laravel-translation-manager/actions)
-[![Packagist License](https://poser.pugx.org/kalimero/laravel-translation-manager/license.png)](http://choosealicense.com/licenses/mit/)
-[![Latest Stable Version](https://poser.pugx.org/kalimero/laravel-translation-manager/version.png)](https://packagist.org/packages/kalimero/laravel-translation-manager)
-[![Total Downloads](https://poser.pugx.org/kalimero/laravel-translation-manager/d/total.png)](https://packagist.org/packages/kalimero/laravel-translation-manager)
+[![Packagist License](https://poser.pugx.org/kalimeromk/laravel-translation-manager/license.png)](http://choosealicense.com/licenses/mit/)
+[![Latest Stable Version](https://poser.pugx.org/kalimeromk/laravel-translation-manager/version.png)](https://packagist.org/packages/kalimeromk/laravel-translation-manager)
+[![Total Downloads](https://poser.pugx.org/kalimeromk/laravel-translation-manager/d/total.png)](https://packagist.org/packages/kalimeromk/laravel-translation-manager)
 
 > **Fork Notice**: This is an enhanced fork of [barryvdh/laravel-translation-manager](https://github.com/barryvdh/laravel-translation-manager) with improved Bootstrap 4/5 and Tailwind CSS support, updated dependencies, and modern Laravel compatibility.
 
@@ -33,9 +33,9 @@ This way, translations can be saved in git history and no overhead is introduced
 
 ## Installation
 
-Require this package in your composer.json and run composer update (or run `composer require kalimero/laravel-translation-manager` directly):
+Require this package in your composer.json and run composer update (or run `composer require kalimeromk/laravel-translation-manager` directly):
 
-    composer require kalimero/laravel-translation-manager
+    composer require kalimeromk/laravel-translation-manager
 
 You need to run the migrations for this package.
 

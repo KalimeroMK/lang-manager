@@ -20,12 +20,6 @@
             <directory suffix=".php">./src</directory>
         </include>
     </source>
-    <coverage>
-        <report>
-            <html outputDirectory="coverage"/>
-            <text outputFile="coverage.txt"/>
-        </report>
-    </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
         <!-- Must be a base64-encoded 32-byte key. "test-key-for-testing" is not

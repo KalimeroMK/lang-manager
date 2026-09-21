@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kalimero\TranslationManager\Console;
 
 use Illuminate\Console\Command;
@@ -23,11 +25,8 @@ class ExportCommand extends Command
      */
     protected $description = 'Export translations to PHP files';
 
-    protected \Kalimero\TranslationManager\Manager $manager;
-
-    public function __construct(Manager $manager)
+    public function __construct(protected Manager $manager)
     {
-        $this->manager = $manager;
         parent::__construct();
     }
 

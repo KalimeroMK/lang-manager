@@ -2,6 +2,8 @@
 
 namespace Kalimero\TranslationManager\Tests;
 
+use Illuminate\Support\Facades\File;
+use Kalimero\TranslationManager\ManagerServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
@@ -9,7 +11,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Clean up any existing test files
         $this->cleanupTestFiles();
     }
@@ -29,19 +31,19 @@ abstract class TestCase extends OrchestraTestCase
     {
         $langPath = lang_path();
         if (is_dir($langPath)) {
-            \Illuminate\Support\Facades\File::deleteDirectory($langPath);
+            File::deleteDirectory($langPath);
         }
-        
+
         $testFile = base_path('test_translations.php');
         if (file_exists($testFile)) {
-            \Illuminate\Support\Facades\File::delete($testFile);
+            File::delete($testFile);
         }
     }
 
     protected function getPackageProviders($app): array
     {
         return [
-            \Kalimero\TranslationManager\ManagerServiceProvider::class,
+            ManagerServiceProvider::class,
         ];
     }
 
@@ -53,7 +55,7 @@ abstract class TestCase extends OrchestraTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
-        
+
         $app['config']->set('translation-manager', [
             'route' => [
                 'prefix' => 'translations',

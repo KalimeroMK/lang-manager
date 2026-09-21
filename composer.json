@@ -1,72 +1,73 @@
 {
-  "name": "kalimero/laravel-translation-manager",
-  "description": "Enhanced Laravel Translation Manager - Fork of barryvdh/laravel-translation-manager with improved Bootstrap 4/5 and Tailwind CSS support",
-  "keywords": [
-    "laravel",
-    "translations",
-    "translator",
-    "bootstrap",
-    "tailwind",
-    "fork"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Barry vd. Heuvel",
-      "email": "barryvdh@gmail.com"
+    "name": "kalimeromk/laravel-translation-manager",
+    "description": "Enhanced Laravel Translation Manager - Fork of barryvdh/laravel-translation-manager with improved Bootstrap 4/5 and Tailwind CSS support",
+    "keywords": [
+        "laravel",
+        "translations",
+        "translator",
+        "bootstrap",
+        "tailwind",
+        "fork"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
+        },
+        {
+            "name": "KalimeroMK",
+            "email": "zbogoevski@gmail.com",
+            "homepage": "https://github.com/KalimeroMK"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10|^11|^12|^13",
+        "illuminate/translation": "^10|^11|^12|^13",
+        "symfony/finder": "^6|^7|^8",
+        "tanmuhittin/laravel-google-translate": "^2.0.1"
     },
-    {
-      "name": "KalimeroMK",
-      "email": "zbogoevski@gmail.com",
-      "homepage": "https://github.com/KalimeroMK"
-    }
-  ],
-  "require": {
-    "php": ">=7.4",
-    "illuminate/support": "^9|^10|^11|^12|^13",
-    "illuminate/translation": "^9|^10|^11|^12|^13",
-    "symfony/finder": "^6|^7|^8",
-    "tanmuhittin/laravel-google-translate": "^2.0.1"
-  },
-  "autoload": {
-    "psr-4": {
-      "Kalimero\\TranslationManager\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Kalimero\\TranslationManager\\Tests\\": "tests/"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.5-dev"
+    "require-dev": {
+        "laravel/pint": "^1.22",
+        "rector/rector": "^2.2",
+        "larastan/larastan": "^3.7",
+        "phpunit/phpunit": "^10.5|^11.0|^12.0",
+        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0"
     },
-    "laravel": {
-      "providers": [
-        "Kalimero\\TranslationManager\\ManagerServiceProvider"
-      ]
-    }
-  },
-  "scripts": {
-    "phpstan": "phpstan analyse",
-    "rector": "rector process --dry-run",
-    "rector:fix": "rector process",
-    "test": "phpunit",
-    "test:coverage": "phpunit --coverage-html coverage",
-    "test:unit": "phpunit --testsuite=Unit",
-    "test:feature": "phpunit --testsuite=Feature",
-    "test:all": [
-      "@phpstan",
-      "@rector",
-      "@test"
-    ]
-  },
-  "require-dev": {
-    "laravel/pint": "^1.22",
-    "rector/rector": "^2.2",
-    "larastan/larastan": "^3.7",
-    "phpunit/phpunit": "^12.3",
-    "orchestra/testbench": "^10.6|^11.0"
-  }
+    "autoload": {
+        "psr-4": {
+            "Kalimero\\TranslationManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kalimero\\TranslationManager\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kalimero\\TranslationManager\\ManagerServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process",
+        "test": "phpunit",
+        "test:coverage": "phpunit --coverage-html coverage",
+        "test:unit": "phpunit --testsuite=Unit",
+        "test:feature": "phpunit --testsuite=Feature",
+        "test:all": [
+            "@phpstan",
+            "@rector",
+            "@test"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true
 }

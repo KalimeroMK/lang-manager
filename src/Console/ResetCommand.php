@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kalimero\TranslationManager\Console;
 
 use Illuminate\Console\Command;
@@ -21,11 +23,8 @@ class ResetCommand extends Command
      */
     protected $description = 'Delete all translations from the database';
 
-    protected \Kalimero\TranslationManager\Manager $manager;
-
-    public function __construct(Manager $manager)
+    public function __construct(protected Manager $manager)
     {
-        $this->manager = $manager;
         parent::__construct();
     }
 

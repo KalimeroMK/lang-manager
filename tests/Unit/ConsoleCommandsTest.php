@@ -2,6 +2,7 @@
 
 namespace Kalimero\TranslationManager\Tests\Unit;
 
+use Illuminate\Support\Facades\File;
 use Kalimero\TranslationManager\Console\CleanCommand;
 use Kalimero\TranslationManager\Console\ExportCommand;
 use Kalimero\TranslationManager\Console\FindCommand;
@@ -9,7 +10,6 @@ use Kalimero\TranslationManager\Console\ImportCommand;
 use Kalimero\TranslationManager\Console\ResetCommand;
 use Kalimero\TranslationManager\Models\Translation;
 use Kalimero\TranslationManager\Tests\TestCase;
-use Illuminate\Support\Facades\File;
 
 class ConsoleCommandsTest extends TestCase
 {
@@ -17,10 +17,10 @@ class ConsoleCommandsTest extends TestCase
     {
         // Create test language files
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        if (!is_dir($langPath.'/en')) {
+        if (! is_dir($langPath.'/en')) {
             File::makeDirectory($langPath.'/en', 0755, true);
         }
         File::put($langPath.'/en/test.php', "<?php\nreturn ['hello' => 'Hello', 'world' => 'World'];");
@@ -49,10 +49,10 @@ class ConsoleCommandsTest extends TestCase
 
         // Create test language file
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        if (!is_dir($langPath.'/en')) {
+        if (! is_dir($langPath.'/en')) {
             File::makeDirectory($langPath.'/en', 0755, true);
         }
         File::put($langPath.'/en/test.php', "<?php\nreturn ['hello' => 'New Value'];");
@@ -104,19 +104,19 @@ class ConsoleCommandsTest extends TestCase
         ]);
 
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
-        if (!is_dir($langPath.'/en')) {
+        if (! is_dir($langPath.'/en')) {
             File::makeDirectory($langPath.'/en', 0755, true);
         }
 
         // Test that the command exists
         $this->assertTrue($this->app->bound('command.translation-manager.export'));
-        
+
         // Test that file was created by calling the command directly
         $command = $this->app->make('command.translation-manager.export');
-        $this->assertInstanceOf(\Kalimero\TranslationManager\Console\ExportCommand::class, $command);
+        $this->assertInstanceOf(ExportCommand::class, $command);
     }
 
     public function test_export_command_json(): void
@@ -131,16 +131,16 @@ class ConsoleCommandsTest extends TestCase
         ]);
 
         $langPath = lang_path();
-        if (!is_dir($langPath)) {
+        if (! is_dir($langPath)) {
             File::makeDirectory($langPath, 0755, true);
         }
 
         // Test that the command exists
         $this->assertTrue($this->app->bound('command.translation-manager.export'));
-        
+
         // Test that file was created by calling the command directly
         $command = $this->app->make('command.translation-manager.export');
-        $this->assertInstanceOf(\Kalimero\TranslationManager\Console\ExportCommand::class, $command);
+        $this->assertInstanceOf(ExportCommand::class, $command);
     }
 
     public function test_clean_command(): void
